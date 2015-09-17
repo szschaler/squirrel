@@ -9,7 +9,7 @@ import squirrel.ir.retrieve.RT_Result;
 
 public abstract class MDL_GenericModel<SC extends MDL_GenericModel.SearchConfig> {
 
-	public static final int topK = 10;
+	public static final int topK = 20;
 
 	protected IX_Collection col;
 

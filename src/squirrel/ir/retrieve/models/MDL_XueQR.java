@@ -179,7 +179,6 @@ public class MDL_XueQR extends MDL_GenericModel<MDL_XueQR.SearchConfig> {
 				}
 			}
 		}
-
 		// Accumulator for results: maps doc ids to RT_Result data
 		@SuppressWarnings("serial")
 		class Accumulator extends HashMap<Integer, RT_Result> {
@@ -197,14 +196,15 @@ public class MDL_XueQR extends MDL_GenericModel<MDL_XueQR.SearchConfig> {
 				}
 
 				// TODO: Verify that I need to multiply here
-				// Π wϵQ P(w|(q,a))
+				// �� w溝Q P(w|(q,a))
 				rt.mulScore(score);
 
-				// P(Q|(q,a)) = Π wϵQ P(w|(q,a))
+				// P(Q|(q,a)) = �� w溝Q P(w|(q,a))
 				put(docID, rt);
 
 			}
 		}
+	
 		Accumulator acc = new Accumulator();
 
 		// Iterate through all documents in the collection
@@ -228,6 +228,7 @@ public class MDL_XueQR extends MDL_GenericModel<MDL_XueQR.SearchConfig> {
 		}
 
 		return results;
+	
 	}
 
 	private double PwD(String w, int docID, SearchConfig sc) {
@@ -293,7 +294,7 @@ public class MDL_XueQR extends MDL_GenericModel<MDL_XueQR.SearchConfig> {
 
 	private double Pmxwqa(String w, int docID, SearchConfig sc) {
 
-		// Σ tϵQ P(w|t) * Pml(t|q)
+		// 誇 t溝Q P(w|t) * Pml(t|q)
 		double sum = 0.0;
 		String[] Qt = col.getDocuments().get(docID).getqTerms();
 		for (String t : Qt) {
@@ -303,7 +304,7 @@ public class MDL_XueQR extends MDL_GenericModel<MDL_XueQR.SearchConfig> {
 		// excessive document lengths ***
 		sum /= Qt.length;
 
-		// Pmx(w|(q,a)) = alpha * Pml(w|q) + beta * Σ tϵq P(w|t) *
+		// Pmx(w|(q,a)) = alpha * Pml(w|q) + beta * 誇 t溝q P(w|t) *
 		// Pml(t|q) + gamma * Pml(w|a)f
 		double result = sc.alpha * Pmlwq(w, docID) + sc.beta * sum + sc.gamma
 				* Pmlwa(w, docID);
